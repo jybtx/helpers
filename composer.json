@@ -1,0 +1,22 @@
+{
+    "name": "jybtx/helpers",
+    "description": "Provides backwards compatibility for helpers in the latest Laravel release.",
+    "keywords": ["laravel", "helpers"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jybtx",
+            "email": "2574034626@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "minimum-stability": "dev"
+}
