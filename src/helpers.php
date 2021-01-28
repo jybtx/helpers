@@ -151,3 +151,23 @@ if ( !function_exists('get_client_real_ip') )
         return $realip;
     }
 }
+
+if ( !function_exists('hidden_string') )
+{
+    /**
+     * [隐藏字符串]
+     * @author jybtx <jyhilichuan@163.com>
+     * @date   2021-01-28
+     * @param  [type]     $string [字符串]
+     * @param  [type]     $start  [开始位置]
+     * @param  [type]     $length [结束位置]
+     * @return [type]             [description]
+     */
+    function hidden_string($string,$start,$length)
+    {
+        $len = strlen($string);
+        $len = $len - ($start + $length);
+        $str = str_repeat('*', $len);
+        return substr_replace( $string, $str, $start, $length );
+    }
+}
