@@ -163,11 +163,102 @@ if ( !function_exists('hidden_string') )
      * @param  [type]     $length [结束位置]
      * @return [type]             [description]
      */
-    function hidden_string($string,$start,$length)
+    function hidden_string($string,$start = 3,$length = -3)
     {
         $len = strlen($string);
         $len = $len - ($start + $length);
         $str = str_repeat('*', $len);
         return substr_replace( $string, $str, $start, $length );
+    }
+}
+
+if ( !function_exists('array_remove_element') ) {
+    /**
+     * [删除数组中的指定元素]
+     * @author jybtx <jyhilichuan@163.com>
+     * @date   2021-02-18
+     * @param  [type]     &$arr    [description]
+     * @param  [type]     $element [description]
+     * @return [type]              [description]
+     */
+    function array_remove_element(&$arr, $element): array
+    {
+        if ( in_array($element, $arr) ) {
+            array_splice($arr, array_search($element, $arr), 1);
+        }
+        return $arr;
+    }
+}
+
+if ( !function_exists('two_array_to_string') ) {
+    /**
+     * [二维数组转字符串]
+     * @author jybtx <jyhilichuan@163.com>
+     * @date   2021-02-18
+     * @param  array      $params [description]
+     * @return [type]             [description]
+     */
+    function two_array_to_string(array $params)
+    {
+        if ( is_array($params) ) {
+            return implode(',', array_map('tdaToString', $params));
+        }
+        return '';
+    }
+}
+
+if ( !function_exists('two_array_to_one_array') ) {
+    /**
+     * [用array_reduce()实现二维转一维]
+     * [array_merge把相同字符串键名的数组覆盖合并，所以必须先用array_value取出值后，再合并]
+     * @author jybtx <jyhilichuan@163.com>
+     * @date   2021-02-18
+     * @param  array      $params [description]
+     * @return [type]             [description]
+     */
+    function two_array_to_one_array(array $params): array
+    {
+        $result = array_reduce($params, function($result, $item){
+            return array_merge($result, array_values($item));
+        }, []);
+        return $result;
+    }
+}
+
+if ( !function_exists('multid_array_to_one_array') ) {
+    /**
+     * [多维数组转一维数组]
+     * @author jybtx <jyhilichuan@163.com>
+     * @date   2021-02-18
+     * @param  array      $params [description]
+     * @return [type]             [description]
+     */
+    function multid_array_to_one_array(array $params): array
+    {
+        $result = [];
+        array_walk_recursive($params, function ($value) use (&$result) {
+            array_push($result, $value);
+        });
+
+        return $result;
+    }
+}
+
+if ( !function_exists('deep_array_to_one_array') ) {
+    /**
+     * [任何多维数组都能转一维数组]
+     * @author jybtx <jyhilichuan@163.com>
+     * @date   2021-02-18
+     * @param  array      $params [description]
+     * @return [type]             [description]
+     */
+    function deep_array_to_one_array(array $params): array 
+    {
+        $result = [];
+        array_walk_recursive($params, function ($value) use (&$result) {
+            array_push($result, $value);
+        });
+
+        return $result;
     }
 }
