@@ -109,46 +109,7 @@ if ( !function_exists('get_client_real_ip') )
      */
     function get_client_real_ip()
     {
-        $realip = false;
-
-        if(isset($_SERVER["HTTP_CDN_SRC_IP"]))
-        {
-            $realip = $_SERVER["HTTP_CDN_SRC_IP"]; //网宿CDN 真实IP
-
-        }else{
-
-            if (isset($_SERVER)){
-
-                if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])){
-
-                    $realip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-
-                } else if (isset($_SERVER["HTTP_CLIENT_IP"])) {
-
-                    $realip = $_SERVER["HTTP_CLIENT_IP"];
-
-                } else {
-
-                    $realip = $_SERVER["REMOTE_ADDR"];
-                }
-            } else {
-                
-                if (getenv("HTTP_X_FORWARDED_FOR")){
-
-                    $realip = getenv("HTTP_X_FORWARDED_FOR");
-
-                } else if (getenv("HTTP_CLIENT_IP")) {
-
-                    $realip = getenv("HTTP_CLIENT_IP");
-
-                } else {
-
-                    $realip = getenv("REMOTE_ADDR");
-
-                }
-            }
-        }
-        return $realip;
+        return $_SERVER['HTTP_X_FORWARDED_FOR']??$_SERVER['HTTP_X_REAL_IP']??$_SERVER['HTTP_CF_CONNECTING_IP ']??$_SERVER['REMOTE_ADDR'];
     }
 }
 
@@ -252,7 +213,7 @@ if ( !function_exists('deep_array_to_one_array') ) {
      * @param  array      $params [description]
      * @return [type]             [description]
      */
-    function deep_array_to_one_array(array $params): array 
+    function deep_array_to_one_array(array $params): array
     {
         $result = [];
         array_walk_recursive($params, function ($value) use (&$result) {
